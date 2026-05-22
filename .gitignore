@@ -1,0 +1,12 @@
+# Local environment and secrets
+.env
+
+# Runtime logs/state
+systemd/
+logs/**
+
+
+# Temporary files
+*.tmp
+*.swp
+*~

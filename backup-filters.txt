@@ -1,0 +1,77 @@
+# ==============================================================================
+# rclone backup filters — ~/.config/rclone/backup-filters.txt
+# Regra: linhas com '-' excluem, '+' incluem, ordem importa (top-down)
+# ==============================================================================
+
+# ── Cache puro ─────────────────────────────────────────────────────────────────
+- .cache/**
+- **/cache/**
+- .npm/**
+- .nvm/**
+- .pyenv/**
+- .virtualenvs/**
+- .var/**
+- .swt/**
+- .lemminx/**
+- .dotnet/**
+- .nv/**
+- .codeium/**
+- .config/Code/User/workspaceStorage/**
+- .config/Code/**
+- .vscode/extensions/**
+- .config/google-chrome/**
+
+
+# ── Logs ───────────────────────────────────────────────────────────────────────
+- .xsession-errors
+- .netExtender.log
+- .netExtender.log.0
+- *.log
+- *.log.*
+
+# ── Lixeira ────────────────────────────────────────────────────────────────────
+- .local/share/Trash/**
+
+# ── Snap (symlinks de sistema, não são dados pessoais) ─────────────────────────
+- snap/**
+- go/**
+
+# ── Desenvolvimento — terraform ────────────────────────────────────────────────
+- **/.terraform/**
+- **/.terragrunt-cache/**
+
+# ── Desenvolvimento — python ───────────────────────────────────────────────────
+- **/venv/**
+- **/.venv/**
+- **/__pycache__/**
+- *.pyc
+- *.pyo
+
+# ── Desenvolvimento — node ─────────────────────────────────────────────────────
+- **/node_modules/**
+- **/.next/**
+- **/dist/**
+- **/build/**
+
+# ── Desenvolvimento — git ──────────────────────────────────────────────────────
+- **/.git/**
+
+# ── Volumes de containers ──────────────────────────────────────────────────────
+- developer/containers/athenas-project/volumes/**
+
+# ── Mega ──────────────────────────────────────────────────────
+- MEGA/**
+
+# ── Temporários e editores ─────────────────────────────────────────────────────
+- *.tmp
+- *.temp
+- *.swp
+- *.swo
+- *~
+
+- .config/discord/**
+- .config/Antigravity/**
+- .antigravity/**
+
+# ── Inclui todo o resto ────────────────────────────────────────────────────────
++ **
