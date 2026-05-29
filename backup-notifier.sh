@@ -112,6 +112,13 @@ start_tray_icon() {
         keep_writer_pid="$!"
 
         printf 'icon:%s\ntooltip:%s\n' "$tray_icon" "$text" >"$fifo"
+        sleep 1
+        if ! kill -0 "$zenity_pid" >/dev/null 2>&1; then
+            kill "$keep_writer_pid" >/dev/null 2>&1 || true
+            rm -f "$fifo"
+            echo "zenity tray process exited during startup" >&2
+            return 1
+        fi
         echo "${zenity_pid}|${keep_writer_pid}|${fifo}"
         return 0
     fi
