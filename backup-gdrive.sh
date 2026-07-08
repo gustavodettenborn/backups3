@@ -156,9 +156,9 @@ fi
 mkdir -p "$(dirname "$LOG")"
 
 echo "======================================" >> "$LOG"
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Iniciando backup (Google Drive)..." >> "$LOG"
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Filtros:    $FILTER_FILE" >> "$LOG"
-echo "[$(date '+%Y-%m-%d %H:%M:%S')] Velocidade: $BWLIMIT" >> "$LOG"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] Iniciando backup (Google Drive)..." >> "$LOG"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] Filtros:    $FILTER_FILE" >> "$LOG"
+echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] Velocidade: $BWLIMIT" >> "$LOG"
 
 OVERALL_STATUS=0
 
@@ -166,14 +166,14 @@ for SOURCE in "${SOURCES[@]}"; do
     RELATIVE="${SOURCE#$HOME/}"
     DEST="${REMOTE}:${GDRIVE_FOLDER}/${HOSTNAME}/home/${USERNAME}/${RELATIVE%/}"
 
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Copiando: $SOURCE → $DEST" >> "$LOG"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] Copiando: $SOURCE → $DEST" >> "$LOG"
 
     # Monta flag --backup-dir se solicitado
     BACKUP_DIR_FLAG=()
     if [[ -n "$BACKUP_DIR_SUFFIX" ]]; then
         BACKUP_DEST="${REMOTE}:${GDRIVE_FOLDER}/${BACKUP_DIR_SUFFIX}/${HOSTNAME}/home/${USERNAME}/${RELATIVE%/}"
         BACKUP_DIR_FLAG=(--backup-dir "$BACKUP_DEST")
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] Arquivos removidos → $BACKUP_DEST" >> "$LOG"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] Arquivos removidos → $BACKUP_DEST" >> "$LOG"
     fi
 
     # rclone copy só envia arquivos novos ou modificados (nunca sobrescreve idênticos)
@@ -191,13 +191,13 @@ for SOURCE in "${SOURCES[@]}"; do
         --stats 30s \
         --log-level INFO \
         "${BACKUP_DIR_FLAG[@]}" \
-        2>&1 | tee -a "$LOG"
+        2>&1 | sed -u 's/^/[UPLOAD] /' | tee -a "$LOG"
 
     STATUS=${PIPESTATUS[0]}
     if [ $STATUS -eq 0 ]; then
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ Backup concluído com sucesso." >> "$LOG"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] ✅ Backup concluído com sucesso." >> "$LOG"
     else
-        echo "[$(date '+%Y-%m-%d %H:%M:%S')] ❌ Backup finalizado com erros. Exit code: $STATUS" >> "$LOG"
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [UPLOAD] ❌ Backup finalizado com erros. Exit code: $STATUS" >> "$LOG"
         OVERALL_STATUS=$STATUS
     fi
 done
