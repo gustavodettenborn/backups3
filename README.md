@@ -82,7 +82,6 @@ backups3/
 ├── backup-notifier.sh
 ├── backup-runtime.conf
 ├── backup-filters.txt
-├── logs/
 └── systemd/user/
     ├── backup-gdrive.service
     └── backup-gdrive.timer
@@ -203,20 +202,22 @@ systemctl --user restart backup-gdrive.service
 
 ## Logs e arquivos de estado
 
-Diretorio padrao: `logs/`
+Diretorio padrao: `/var/log/backups3/` (configuravel via `BACKUP_LOG_DIR` no `.env`)
+
+Como `/var/log` pertence ao root, o `install.sh` cria esse diretorio uma unica vez com `sudo install -d` e o deixa com o usuario atual como dono, para que os scripts (rodando como usuario, via `systemd --user`) possam gravar logs nele sem privilegios elevados.
 
 Arquivos principais:
 
-- `logs/backup-gdrive.log` -> log do rclone
-- `logs/backup-wrapper.log` -> log do orquestrador
-- `logs/backup-last-output.log` -> ultima saida capturada
-- `logs/backup-gdrive.lock` -> lock de execucao
+- `/var/log/backups3/backup-gdrive.log` -> log do rclone (Google Drive)
+- `/var/log/backups3/backup-wrapper.log` -> log do orquestrador
+- `/var/log/backups3/backup-last-output.log` -> ultima saida capturada
+- `/var/log/backups3/backup-gdrive.lock` -> lock de execucao
 
 Acompanhar logs:
 
 ```bash
-tail -f logs/backup-wrapper.log
-tail -f logs/backup-gdrive.log
+tail -f /var/log/backups3/backup-wrapper.log
+tail -f /var/log/backups3/backup-gdrive.log
 journalctl --user -u backup-gdrive.service -f
 ```
 
@@ -270,7 +271,7 @@ rm -f /tmp/mock-gdrive-auth-fail.sh
 Resultado esperado:
 
 1. retorno de erro no wrapper
-2. linha `Authentication error detected` em `logs/backup-wrapper.log`
+2. linha `Authentication error detected` em `/var/log/backups3/backup-wrapper.log`
 3. notificacao no desktop para o usuario logado
 
 ## Arquivo de configuracao
@@ -324,5 +325,5 @@ Checklist rapido de saude:
 systemctl --user is-enabled backup-gdrive.service
 systemctl --user is-active backup-gdrive.service
 systemctl --user --no-pager --full status backup-gdrive.service | head -n 15
-tail -n 30 logs/backup-wrapper.log
+tail -n 30 /var/log/backups3/backup-wrapper.log
 ```

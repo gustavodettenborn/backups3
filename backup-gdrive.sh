@@ -34,7 +34,7 @@ REMOTE="${GDRIVE_REMOTE:-googledrive}"                  # nome do remote configu
 GDRIVE_FOLDER="${GDRIVE_FOLDER:-backup}"           # pasta raiz no Google Drive
 HOSTNAME=$(hostname)
 USERNAME=$(whoami)
-LOG="${BACKUP_GDRIVE_LOG:-$SCRIPT_DIR/logs/backup-gdrive.log}"
+LOG="${BACKUP_GDRIVE_LOG:-/var/log/backups3/backup-gdrive.log}"
 FILTER_FILE="${BACKUP_FILTER_FILE:-$SCRIPT_DIR/backup-filters.txt}"
 
 # Diretórios a fazer backup
@@ -185,8 +185,9 @@ for SOURCE in "${SOURCES[@]}"; do
         --checksum \
         --no-update-modtime \
         --bwlimit "$BWLIMIT" \
-        --transfers 4 \
-        --checkers 8 \
+        --transfers 8 \
+        --checkers 16 \
+        --drive-chunk-size 64M \
         --stats 30s \
         --log-level INFO \
         "${BACKUP_DIR_FLAG[@]}" \
