@@ -57,7 +57,7 @@
 - **/.git/**
 
 # ── Volumes de containers ──────────────────────────────────────────────────────
-- developer/containers/athenas-project/volumes/**
+- developer/containers/athenas-project/volumes/db/**
 
 # ── Mega ──────────────────────────────────────────────────────
 - MEGA/**
