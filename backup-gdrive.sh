@@ -115,6 +115,7 @@ if [ "$MODE" = "excluded" ]; then
         DEST="${REMOTE}:${GDRIVE_FOLDER}/${HOSTNAME}/home/${USERNAME}/${RELATIVE%/}"
         rclone copy "$SOURCE" "$DEST" \
             --filter-from "$FILTER_FILE" \
+            --ignore-case \
             --checksum \
             --no-update-modtime \
             --dry-run \
@@ -140,6 +141,7 @@ if [ "$MODE" = "dry-run" ]; then
         DEST="${REMOTE}:${GDRIVE_FOLDER}/${HOSTNAME}/home/${USERNAME}/${RELATIVE%/}"
         rclone copy "$SOURCE" "$DEST" \
             --filter-from "$FILTER_FILE" \
+            --ignore-case \
             --checksum \
             --no-update-modtime \
             --dry-run \
@@ -182,6 +184,7 @@ for SOURCE in "${SOURCES[@]}"; do
     # --ignore-existing: REMOVIDO - queremos atualizar se houver mudanças
     rclone copy "$SOURCE" "$DEST" \
         --filter-from "$FILTER_FILE" \
+        --ignore-case \
         --checksum \
         --no-update-modtime \
         --bwlimit "$BWLIMIT" \

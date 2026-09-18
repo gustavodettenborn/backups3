@@ -5,7 +5,7 @@
 
 # ── Cache puro ─────────────────────────────────────────────────────────────────
 - .cache/**
-- **/cache/**
+- **/*cache*/**
 - .npm/**
 - .nvm/**
 - .pyenv/**
@@ -54,7 +54,14 @@
 - **/build/**
 
 # ── Desenvolvimento — git ──────────────────────────────────────────────────────
-- **/.git/**
+#- **/.git/**
+- **/.svn/**
+
+# ── Auto-update / extensões reinstaláveis ──────────────────────────────────────
+- .local/share/claude/versions/**
+- .local/share/GitKrakenCLI/versions/**
+- .kiro/extensions/**
+- .eclipse/**
 
 # ── Volumes de containers ──────────────────────────────────────────────────────
 - developer/containers/athenas-project/volumes/db/**
@@ -69,9 +76,22 @@
 - *.swo
 - *~
 
+# ── Instaladores ───────────────────────────────────────────────────────────────
+- *.deb
+- *.AppImage
+
 - .config/discord/**
 - .config/Antigravity/**
 - .antigravity/**
+
+# ── Claude Desktop — imagens de VM recriaveis (12 GB) ─────────────────────────
+- .config/Claude/vm_bundles/**
+- .config/Claude/claude-code/**
+- .config/Claude/claude-code-vm/**
+
+# ── Segredos: NAO enviar credenciais para o Drive ─────────────────────────────
+- .config/rclone/rclone.conf
+- .claude/.credentials.json
 
 # ── Inclui todo o resto ────────────────────────────────────────────────────────
 + **
